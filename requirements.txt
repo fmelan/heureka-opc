@@ -38,12 +38,16 @@ kafka-python==2.0.2
     # via -r requirements.in
 mccabe==0.7.0
     # via flake8
+mongomock==4.1.2
+    # via pytest-mongodb
 mypy-extensions==0.4.3
     # via black
 nodeenv==1.7.0
     # via pre-commit
 packaging==22.0
-    # via pytest
+    # via
+    #   mongomock
+    #   pytest
 pathspec==0.10.3
     # via black
 pbr==5.11.0
@@ -65,8 +69,17 @@ pydocstyle==6.1.1
 pyflakes==3.0.1
     # via flake8
 pymongo==4.3.3
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   pytest-mongodb
 pytest==7.2.0
+    # via
+    #   -r requirements.in
+    #   pytest-mock
+    #   pytest-mongodb
+pytest-mock==3.10.0
+    # via -r requirements.in
+pytest-mongodb==2.2.0
     # via -r requirements.in
 python-dotenv==0.21.0
     # via pydantic
@@ -74,6 +87,9 @@ pyyaml==6.0
     # via
     #   bandit
     #   pre-commit
+    #   pytest-mongodb
+sentinels==1.0.0
+    # via mongomock
 smmap==5.0.0
     # via gitdb
 snowballstemmer==2.2.0

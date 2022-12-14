@@ -7,4 +7,6 @@ pydantic[dotenv]
 kafka-python
 pydantic
 pytest
+pytest-mongodb
+pytest-mock
 pymongo

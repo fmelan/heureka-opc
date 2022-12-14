@@ -1,0 +1,35 @@
+
+[{
+    "id": "ed87340d-3703-45b1-a7f8-5fa7d22fc9e9",
+    "category": "Books",
+    "name": "Harry Potter és a bölcsek köve (2016)",
+    "description": "A Harry Potter és a bölcsek köve c. könyvről részletesen:\nHarry Potter tizenegy éves, amikor megtudja, hogy ő bizony varázslónak született, és felvételt nyert a Roxfort Boszorkány- és Varázslóképző Szakiskolába.",
+    "parameters": {
+      "number of pages": "336",
+      "weight": "380",
+      "publisher": "Fizika"
+    },
+    "product_id": "prod1"
+  },
+  {
+    "id": "631aa5a8-9b5d-4ae2-945a-00a0a539b101",
+    "category": "LEGO",
+    "name": "LEGO Harry Potter Grad Bradavičarka (71043)",
+    "description": "Dobrodošli na ikonski LEGO® Harry Potter™ 71043 Grad Bradavičarkš Sestavi in razstavi podrobno izdelani model LEGO® iz več kot 6000 koščkov. Odkrij podrobno okrašene sobane, stolpe in učilnice, pa tudi veliko skritih lastnosti in prizorov iz filmov o Harryju Potterju. Grad poseli s 27 mikrofigurami, med katerimi so tudi Harry, Hermiona in Ron. Tu je tudi veliko ikonskih pripomočkov in artefaktov. Čarovniško izkušnjo izpopolni s Hagridovo kočo in vrbo mesarico.",
+    "parameters": {
+      "manufacturer": "LEGO",
+      "minimum age": 16,
+      "set": "Harry Potter"
+    }
+  },
+  {
+    "id": "38495bd1-afe9-4cd0-bf9d-eca162e75542",
+    "category": "LEGO",
+    "name": "LEGO Harry Potter 71043 Bradavický hrad",
+    "description": "Ponořte se do tajemného světa čar a kouzel a podívejte se do kouzelnické školy v Bradavicích. Oblíbené postavy Harryho, Rona a Hermiony zde potkají spoustu přátel a členů profesorského sboru, ale i nepřátel, kteří se přiklonili na stranu zlého kouzelníka Lorda Voldemorta. Pokud mají bitvu vyhrát, musí se naučit ještě hodně kouzel, lektvarů a dalších čarodějnických dovedností. Na své cestě se potkají s mnoha zajímavými tvory. Celá škola i její okolí jsou do detailu propracovány, a tak jistě poznáte spoustu známých míst. Pohyblivé schodiště, hostina ve velkém sále, Nebelvírská kolej i učebny - vše je tak, jak to znáte z filmů kouzelnické ságy. Stavebnice je kompatibilní s dalšími z řady, takže můžete svůj svět stále rozšiřovat.",
+    "parameters": {
+      "minimum age": 16,
+      "set": "Harry Potter",
+      "number of pieces": 6020
+    }
+  }]
