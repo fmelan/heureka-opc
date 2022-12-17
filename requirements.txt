@@ -96,6 +96,8 @@ snowballstemmer==2.2.0
     # via pydocstyle
 stevedore==4.1.1
     # via bandit
+structlog==22.3.0
+    # via -r requirements.in
 toml==0.10.2
     # via pre-commit
 tomli==2.0.1

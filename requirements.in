@@ -10,3 +10,4 @@ pytest
 pytest-mongodb
 pytest-mock
 pymongo
+structlog
