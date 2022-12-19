@@ -3,7 +3,7 @@ flake8-docstrings
 pre-commit
 bandit
 pydantic[dotenv]
-kafka-python
+aiokafka
 pydantic
 pytest
 pytest-mongodb
