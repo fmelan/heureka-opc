@@ -12,3 +12,4 @@ pymongo
 structlog
 fastapi
 uvicorn[standard]
+httpx

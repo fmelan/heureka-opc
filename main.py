@@ -12,6 +12,7 @@ log = structlog.get_logger()
 
 app = FastAPI()
 
+
 @app.get("/")
 async def read_root():
     return {"Hello": "World"}
@@ -20,11 +21,6 @@ async def read_root():
 @app.on_event("startup")
 async def startup_events():
     asyncio.create_task(read_kafka_messages(process_message))
-
-
-@app.on_event("shutdown")
-def shutdown_events():
-    pass
 
 
 if __name__ == "__main__":

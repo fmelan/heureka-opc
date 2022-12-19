@@ -15,14 +15,16 @@ def find_linked_product(offer_ids: list) -> (int, list):
     offers_linked = []
 
     with mongo_client() as db:
-        offers = db.offers.find({"id": {"$in": offer_ids}, "product_id": {"$exists": True}})
+        offers = db.offers.find(
+            {"id": {"$in": offer_ids}, "product_id": {"$exists": True}}
+        )
 
-    loffers = list(offers)
-    if loffers:
-        product_id = loffers[0]["product_id"]
-        offers_linked = [o["id"] for o in loffers]
+        loffers = list(offers)
+        if loffers:
+            product_id = loffers[0]["product_id"]
+            offers_linked = [o["id"] for o in loffers]
 
-    return product_id, offers_linked
+        return product_id, offers_linked
 
 
 def set_product_to_offer(product_id: int, offer_ids):
@@ -61,22 +63,23 @@ def process_matching_offers(offer_id):
         set_product_to_offer(product_id, [offer_id])
 
 
-def process_offer(offer_data: dict):
+def process_message(offer_data: dict):
     """
     Processing of offer_data data. Stores data in database. Checks matching
     offers. Creates new products if offers are matching.
     param offer_data: offer_data data
     :return:
     """
-    with mongo_client() as db:
-        offer = db.offers.find_one({"id": offer_data["id"]})
-        if offer:
-            # offer_data stored, update data
-            db.offers.update_one({"id": offer["id"]}, {"$set": offer_data})
-            offer_id = offer["id"]
-        else:
-            # new offer
-            db.offers.insert_one(offer_data)
-            offer_id = offer_data["id"]
-            # process matching offers
-        process_matching_offers(offer_id)
+    if "id" in offer_data:
+        with mongo_client() as db:
+            offer = db.offers.find_one({"id": offer_data["id"]})
+            if offer:
+                # offer_data stored, update data
+                db.offers.update_one({"id": offer["id"]}, {"$set": offer_data})
+                offer_id = offer["id"]
+            else:
+                # new offer
+                db.offers.insert_one(offer_data)
+                offer_id = offer_data["id"]
+                # process matching offers
+            process_matching_offers(offer_id)

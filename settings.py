@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     enable_auto_commit: bool
     mongodb_connstring: str
     database_name: str
+    offer_api: str
+    offer_api_token: str
 
     class Config:
         env_file = ".env"

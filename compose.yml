@@ -5,14 +5,20 @@ services:
       - mongo-heurekaopc-data:/data/db
     ports:
       - "27017:27017"
+  testday-api:
+    image: heurekaoc/testday-api
   heurekaopc:
     build: .
-    container_name: fastapi-application
+    container_name: heurekaopc
     environment:
       PORT: 80
     ports:
       - '80:80'
     restart: "no"
+    depends_on:
+      - db
+      - testday-api
+
 
 volumes:
   mongo-heurekaopc-data:

@@ -8,6 +8,7 @@ from settings import settings
 
 log = structlog.get_logger()
 
+
 async def read_kafka_messages(msg_processor):
     """
     Reads messages from kafka and process them using the
