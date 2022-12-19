@@ -4,6 +4,10 @@
 #
 #    pip-compile requirements.in
 #
+anyio==3.6.2
+    # via
+    #   starlette
+    #   watchfiles
 attrs==22.1.0
     # via pytest
 bandit==1.7.4
@@ -13,13 +17,17 @@ black==22.12.0
 cfgv==3.3.1
     # via pre-commit
 click==8.1.3
-    # via black
+    # via
+    #   black
+    #   uvicorn
 distlib==0.3.6
     # via virtualenv
 dnspython==2.2.1
     # via pymongo
 exceptiongroup==1.0.4
     # via pytest
+fastapi==0.88.0
+    # via -r requirements.in
 filelock==3.8.2
     # via virtualenv
 flake8==6.0.0
@@ -30,8 +38,14 @@ gitdb==4.0.10
     # via gitpython
 gitpython==3.1.29
     # via bandit
+h11==0.14.0
+    # via uvicorn
+httptools==0.5.0
+    # via uvicorn
 identify==2.5.9
     # via pre-commit
+idna==3.4
+    # via anyio
 iniconfig==1.1.1
     # via pytest
 kafka-python==2.0.2
@@ -63,7 +77,9 @@ pre-commit==2.20.0
 pycodestyle==2.10.0
     # via flake8
 pydantic[dotenv]==1.10.2
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   fastapi
 pydocstyle==6.1.1
     # via flake8-docstrings
 pyflakes==3.0.1
@@ -82,18 +98,25 @@ pytest-mock==3.10.0
 pytest-mongodb==2.2.0
     # via -r requirements.in
 python-dotenv==0.21.0
-    # via pydantic
+    # via
+    #   pydantic
+    #   uvicorn
 pyyaml==6.0
     # via
     #   bandit
     #   pre-commit
     #   pytest-mongodb
+    #   uvicorn
 sentinels==1.0.0
     # via mongomock
 smmap==5.0.0
     # via gitdb
+sniffio==1.3.0
+    # via anyio
 snowballstemmer==2.2.0
     # via pydocstyle
+starlette==0.22.0
+    # via fastapi
 stevedore==4.1.1
     # via bandit
 structlog==22.3.0
@@ -106,8 +129,16 @@ tomli==2.0.1
     #   pytest
 typing-extensions==4.4.0
     # via pydantic
+uvicorn[standard]==0.20.0
+    # via -r requirements.in
+uvloop==0.17.0
+    # via uvicorn
 virtualenv==20.17.1
     # via pre-commit
+watchfiles==0.18.1
+    # via uvicorn
+websockets==10.4
+    # via uvicorn
 
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools

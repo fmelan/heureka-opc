@@ -3,7 +3,6 @@ flake8-docstrings
 pre-commit
 bandit
 pydantic[dotenv]
-
 kafka-python
 pydantic
 pytest
@@ -11,3 +10,5 @@ pytest-mongodb
 pytest-mock
 pymongo
 structlog
+fastapi
+uvicorn[standard]

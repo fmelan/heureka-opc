@@ -1,6 +1,4 @@
-from heurekaopc.model import (
-    db,
-)
+from heurekaopc.model import mongo_client
 from heurekaopc.offer_api import offer_matches
 
 
@@ -16,7 +14,8 @@ def find_linked_product(offer_ids: list) -> (int, list):
     product_id = None
     offers_linked = []
 
-    offers = db.offers.find({"id": {"$in": offer_ids}, "product_id": {"$exists": True}})
+    with mongo_client() as db:
+        offers = db.offers.find({"id": {"$in": offer_ids}, "product_id": {"$exists": True}})
 
     loffers = list(offers)
     if loffers:
@@ -34,16 +33,17 @@ def set_product_to_offer(product_id: int, offer_ids):
     :param: offer_ids: collection of offer ids
     :return:
     """
-    stored_offers = list(db.offers.find({"id": {"$in": offer_ids}}))
-    # update existing
-    if stored_offers:
-        db.offers.update_many(
-            {"id": {"$in": [x["id"] for x in stored_offers]}},
-            {"$set": {"product_id": product_id}},
-        )
-    # create new
-    for new_offer_id in set(offer_ids) - set(o["id"] for o in stored_offers):
-        db.offers.insert_one({"id": new_offer_id, "product_id": product_id})
+    with mongo_client() as db:
+        stored_offers = list(db.offers.find({"id": {"$in": offer_ids}}))
+        # update existing
+        if stored_offers:
+            db.offers.update_many(
+                {"id": {"$in": [x["id"] for x in stored_offers]}},
+                {"$set": {"product_id": product_id}},
+            )
+        # create new
+        for new_offer_id in set(offer_ids) - set(o["id"] for o in stored_offers):
+            db.offers.insert_one({"id": new_offer_id, "product_id": product_id})
 
 
 def process_matching_offers(offer_id):
@@ -54,7 +54,8 @@ def process_matching_offers(offer_id):
             # set the link where is missing
             set_product_to_offer(product_id, list(set(matching) - set(offer_ids)))
         else:
-            product_id = str(db.products.insert_one({}).inserted_id)
+            with mongo_client() as db:
+                product_id = str(db.products.insert_one({}).inserted_id)
             set_product_to_offer(product_id, matching)
         # finally, set product_id to processed offer
         set_product_to_offer(product_id, [offer_id])
@@ -67,14 +68,15 @@ def process_offer(offer_data: dict):
     param offer_data: offer_data data
     :return:
     """
-    offer = db.offers.find_one({"id": offer_data["id"]})
-    if offer:
-        # offer_data stored, update data
-        db.offers.update_one({"id": offer["id"]}, {"$set": offer_data})
-        offer_id = offer["id"]
-    else:
-        # new offer
-        db.offers.insert_one(offer_data)
-        offer_id = offer_data["id"]
-        # process matching offers
-    process_matching_offers(offer_id)
+    with mongo_client() as db:
+        offer = db.offers.find_one({"id": offer_data["id"]})
+        if offer:
+            # offer_data stored, update data
+            db.offers.update_one({"id": offer["id"]}, {"$set": offer_data})
+            offer_id = offer["id"]
+        else:
+            # new offer
+            db.offers.insert_one(offer_data)
+            offer_id = offer_data["id"]
+            # process matching offers
+        process_matching_offers(offer_id)

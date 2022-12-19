@@ -1,0 +1,18 @@
+services:
+  db:
+    image: mongo
+    volumes:
+      - mongo-heurekaopc-data:/data/db
+    ports:
+      - "27017:27017"
+  heurekaopc:
+    build: .
+    container_name: fastapi-application
+    environment:
+      PORT: 80
+    ports:
+      - '80:80'
+    restart: "no"
+
+volumes:
+  mongo-heurekaopc-data:
