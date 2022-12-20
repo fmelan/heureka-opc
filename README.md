@@ -1,5 +1,5 @@
 # heureka-opc
-One Product and Category Test Assignement
+One Product and Category Test Assignment
 
 ## Running with Docker Compose
 
