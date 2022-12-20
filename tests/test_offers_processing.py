@@ -1,12 +1,9 @@
-from contextlib import contextmanager
-
-from pytest_mock import mocker
-
 from heurekaopc import offers_processing
 from heurekaopc.offers_processing import (
     find_linked_product,
     set_product_to_offer,
     process_message,
+    compare_offer_parameters,
 )
 
 
@@ -231,3 +228,63 @@ def test_process_offer(mongodb, mocker):
     assert offer94fe["product_id"] == product_id
 
     assert len(list(mongodb.offers.find())) == 8
+
+
+def test_compare_offer_parameters():
+
+    assert compare_offer_parameters({}, {}) == (0, 0)
+
+    offer1 = {
+        "_id": "63a01745d53047422cd1365d",
+        "id": "ed87340d-3703-45b1-a7f8-5fa7d22fc9e9",
+        "category": "Books",
+        "name": "Harry Potter és a bölcsek köve (2016)",
+        "description": 'A "Harry Potter és a bölcsek köve" c. könyvről részletesen:\nHarry Potter tizenegy éves, amikor megtudja, hogy ő bizony varázslónak született, és felvételt nyert a Roxfort Boszorkány- és Varázslóképző Szakiskolába.',
+        "parameters": {
+            "number of pages": "336",
+            "weight": "380",
+            "publisher": "Fizika",
+        },
+        "product_id": "63a07b966774c9370becd789",
+    }
+
+    offer2 = {
+        "_id": "63a066eb7cc2ee368b78d7f3",
+        "id": "29e0b669-a670-476b-808a-e21a449d1c0f",
+        "category": "Books",
+        "name": "Harry Potter a Kámen mudrců - J. K. Rowlingová",
+        "description": "Harryho Pottera Vám zajisté nemusím představovat, neboť je to taková knižní legenda a téměř už i klasika. Pro mnoho z Vás je to dokonce kniha, na které jste vyrostli.\n\nKdyž byl Harrymu jeden rok, tak přišel o své rodiče. Ten - o kom se nemluví - zavraždil Harryho rodiče a chtěl zabít i jeho samotného, jenže nějakým zázrakem chlapec přežil a na čele mu zůstala jizva v podobě blesku. Chlapec deset let vyrůstal u strýce a tety Dursleyových a jejich syna Dudleyho. Bylo by pravdě podobné, že když se jedná o přímé příbuzné, že bude o chlapce postaráno dobře, ale Harry doslova trpěl a je div, že z něho vyrostl bystrý a hodný chlapec.\n\nNezná svou minulost, nezná své rodiče, bylo mu jen řečeno, že zemřeli při nehodě. Neví z jaké rodiny pochází a ani neví, co mu bylo dáno do vínku. Ví, že je jiný, že se občas stanou zvláštní věci, ale ani ve snu by ho nenapadlo, že v den svých jedenáctých narozenin zjistí pravdu, která mu navždy změní život. A i přesto, že se teta se strýcem snaží všemožně zabránit tomu, aby se Harry dozvěděl skutečnost o sobě i svých rodičích, se jednoho dne objeví sova se zvláštním dopisem z Bradavic - ze školy čar a kouzel, jejímž ředitelem je Albus Brumbál.\n\nK příběhu asi netřeba více dodávat, kdo by jej neznal? Věřím, že není nikdo, i třeba těch, kteří knihy nečetli a kdo by nevěděl kdo je Harry Potter. Víte, že letos je to dvacet let od vydání první knihy od skvělé autorky J.K. Rowling?",
+        "parameters": {
+            "author": "J.K. Rowling",
+            "genre": "for children",
+            "publisher": "Albatros",
+            "number of pages": "336",
+            "year": "2017",
+            "language": "czech",
+        },
+        "product_id": "63a07b966774c9370becd789",
+    }
+
+    assert compare_offer_parameters(offer1, offer2) == (2, 5)
+
+    offer1 = {
+        "parameters": {
+            "number of pages": "336",
+            "weight": "380",
+            "publisher": "Fizika",
+            "additional_info": {"year": "2016"},
+        },
+    }
+
+    offer2 = {
+        "parameters": {
+            "author": "J.K. Rowling",
+            "genre": "for children",
+            "publisher": "Albatros",
+            "number of pages": "336",
+            "year": "2017",
+            "language": "czech",
+        },
+    }
+
+    assert compare_offer_parameters(offer1, offer2) == (3, 4)

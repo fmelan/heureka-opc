@@ -1,5 +1,5 @@
 from heurekaopc.model import mongo_client
-from heurekaopc.offer_api import offer_matches
+from heurekaopc.offer_matching_api import offer_matches
 
 
 def find_linked_product(offer_ids: list) -> (int, list):
@@ -83,3 +83,41 @@ def process_message(offer_data: dict):
                 offer_id = offer_data["id"]
                 # process matching offers
             process_matching_offers(offer_id)
+
+
+def extract_params(params):
+    """
+    Returns a set of keys from the dict. If the value in dict
+    is again dict, then it searches secursively.
+    :param param: dict of params
+    :return:
+    """
+    ret_val = set({})
+    for key in params.keys():
+        if isinstance(params[key], dict):
+            ret_val = ret_val.union(extract_params(params[key]))
+        else:
+            ret_val.add(key)
+    return ret_val
+
+
+def compare_offer_parameters(offer_1: dict, offer_2: dict):
+    """
+    Compares two offers and returns the number of parameters they have in common
+    and how many differ.
+    :param offer_1:
+    :param offer_2:
+    :return: tuple (number of common parameters, number of parameters which differ)
+    """
+    params1 = extract_params(offer_1.get("parameters", {}))
+    params2 = extract_params(offer_2.get("parameters", {}))
+
+    return len(params1 & params2), len(params1.symmetric_difference(params2))
+
+
+def compare_offers(offer_1_id: str, offer_2_id: str):
+    with mongo_client() as db:
+        return compare_offer_parameters(
+            db.offers.find_one({"id": offer_1_id}),
+            db.offers.find_one({"id": offer_2_id}),
+        )
