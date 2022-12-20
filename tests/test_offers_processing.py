@@ -19,7 +19,6 @@ class mongo_client(object):
 
 
 def test_find_linked_product(mongodb):
-    # TODO setup, teardown
     offers_processing.mongo_client = mongo_client
     offers_processing.mongo_client.mongodb = mongodb
 
@@ -53,7 +52,6 @@ def test_find_linked_product(mongodb):
 
 
 def test_set_product_to_offer(mongodb):
-    # TODO setup, teardown
     offers_processing.mongo_client = mongo_client
     offers_processing.mongo_client.mongodb = mongodb
 
@@ -82,7 +80,6 @@ def test_set_product_to_offer(mongodb):
 
 
 def test_process_offer(mongodb, mocker):
-    # TODO setup, teardown
     offers_processing.mongo_client = mongo_client
     offers_processing.mongo_client.mongodb = mongodb
 

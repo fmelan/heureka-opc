@@ -65,10 +65,10 @@ def process_matching_offers(offer_id):
 
 def process_message(offer_data: dict):
     """
-    Processing of offer_data data. Stores data in database. Checks matching
-    offers. Creates new products if offers are matching.
-    param offer_data: offer_data data
-    :return:
+    Processing of offer data. Stores data in database. Checks matching
+    offers. Creates new products if offers are matching. Sets the link between
+    product and offers.
+    param offer_data: offer data
     """
     if "id" in offer_data:
         with mongo_client() as db:
@@ -88,9 +88,9 @@ def process_message(offer_data: dict):
 def extract_params(params):
     """
     Returns a set of keys from the dict. If the value in dict
-    is again dict, then it searches secursively.
+    is again dict, then it searches recursively.
     :param param: dict of params
-    :return:
+    :return: set of all keys in the dict and nested dicts
     """
     ret_val = set({})
     for key in params.keys():
