@@ -85,11 +85,11 @@ def process_message(offer_data: dict):
             process_matching_offers(offer_id)
 
 
-def extract_params(params):
+def extract_params(params: dict):
     """
     Returns a set of keys from the dict. If the value in dict
     is again dict, then it searches recursively.
-    :param param: dict of params
+    :param: params: dict of params
     :return: set of all keys in the dict and nested dicts
     """
     ret_val = set({})
@@ -105,8 +105,8 @@ def compare_offer_parameters(offer_1: dict, offer_2: dict):
     """
     Compares two offers and returns the number of parameters they have in common
     and how many differ.
-    :param offer_1:
-    :param offer_2:
+    :param: offer_1:
+    :param: offer_2:
     :return: tuple (number of common parameters, number of parameters which differ)
     """
     params1 = extract_params(offer_1.get("parameters", {}))
