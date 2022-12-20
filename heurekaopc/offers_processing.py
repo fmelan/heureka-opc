@@ -113,11 +113,3 @@ def compare_offer_parameters(offer_1: dict, offer_2: dict):
     params2 = extract_params(offer_2.get("parameters", {}))
 
     return len(params1 & params2), len(params1.symmetric_difference(params2))
-
-
-def compare_offers(offer_1_id: str, offer_2_id: str):
-    with mongo_client() as db:
-        return compare_offer_parameters(
-            db.offers.find_one({"id": offer_1_id}),
-            db.offers.find_one({"id": offer_2_id}),
-        )
